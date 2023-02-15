@@ -1,6 +1,5 @@
 package com.randebrock.worldsBestBank.model;
 
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
@@ -18,14 +17,8 @@ public class CreditCard extends MotherOfAllAccounts{
     public CreditCard() {
     }
 
-    public CreditCard(String primaryOwner, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate) {
-        super(primaryOwner, penaltyFee);
-        this.creditLimit = creditLimit;
-        this.interestRate = interestRate;
-    }
-
-    public CreditCard(String primaryOwner, String optionalSecondaryOwner, BigDecimal penaltyFee, BigDecimal creditLimit, BigDecimal interestRate) {
-        super(primaryOwner, optionalSecondaryOwner, penaltyFee);
+    public CreditCard(AccountHolder primaryOwner, BigDecimal creditLimit, BigDecimal interestRate) {
+        super(primaryOwner);
         this.creditLimit = creditLimit;
         this.interestRate = interestRate;
     }

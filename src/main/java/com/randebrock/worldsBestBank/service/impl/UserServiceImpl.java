@@ -1,6 +1,7 @@
 package com.randebrock.worldsBestBank.service.impl;
 
-import com.randebrock.worldsBestBank.model.User;
+import com.randebrock.worldsBestBank.model.AccountHolder;
+import com.randebrock.worldsBestBank.repository.AccountHolderRepository;
 import com.randebrock.worldsBestBank.repository.UserRepository;
 import com.randebrock.worldsBestBank.service.interfaces.UserService;
 import org.slf4j.Logger;
@@ -17,17 +18,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private AccountHolderRepository accountHolderRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User saveUser(User user) {
-        // Encode the user's password for security before saving
+    public AccountHolder saveUser(AccountHolder user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return accountHolderRepository.save(user);
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<AccountHolder> getUsers() {
+        return accountHolderRepository.findAll();
     }
 }
