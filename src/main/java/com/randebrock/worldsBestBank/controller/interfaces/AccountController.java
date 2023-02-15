@@ -1,5 +1,7 @@
 package com.randebrock.worldsBestBank.controller.interfaces;
 
+import com.randebrock.worldsBestBank.controller.dto.CheckingDTO;
+
 public interface AccountController {
-    void createNewAccount();
+    void createNewCheckingAccount(CheckingDTO checkingDTO);
 }

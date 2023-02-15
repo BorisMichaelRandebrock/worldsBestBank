@@ -4,7 +4,6 @@ import com.randebrock.worldsBestBank.enums.Status;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Date;
 
@@ -18,19 +17,14 @@ public class StudentChecking extends MotherOfAllAccounts{
     public StudentChecking() {
     }
 
-    public StudentChecking(String primaryOwner, BigDecimal penaltyFee, String secretKey) {
-        super(primaryOwner, penaltyFee);
+    public StudentChecking(AccountHolder primaryOwner, String secretKey) {
+        super(primaryOwner);
         this.secretKey = secretKey;
         this.creationDate = Date.from(Instant.now());
         this.status = Status.ACTIVE;
     }
 
-    public StudentChecking(String primaryOwner, String optionalSecondaryOwner, BigDecimal penaltyFee, String secretKey) {
-        super(primaryOwner, optionalSecondaryOwner, penaltyFee);
-        this.secretKey = secretKey;
-        this.creationDate = Date.from(Instant.now());
-        this.status = Status.ACTIVE;
-    }
+
 
     public String getSecretKey() {
         return secretKey;

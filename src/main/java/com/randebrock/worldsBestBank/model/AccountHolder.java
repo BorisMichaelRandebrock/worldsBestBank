@@ -6,7 +6,7 @@ import java.util.Date;
 
     @Entity
     @PrimaryKeyJoinColumn(name = "id")
-    public class AccountHolders extends User {
+    public class AccountHolder extends User {
     private Date dateOfBirth;
         @AttributeOverrides({
                 @AttributeOverride(name = "streetName", column = @Column(name = "primary_address")),
@@ -29,16 +29,16 @@ import java.util.Date;
         @Embedded
     private Address secondaryAddress;
 
-    public AccountHolders() {
+    public AccountHolder() {
     }
 
-    public AccountHolders(String name, String username, String password, Date dateOfBirth, Address primaryAddress) {
+    public AccountHolder(String name, String username, String password, Date dateOfBirth, Address primaryAddress) {
         super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
     }
 
-    public AccountHolders(String name, String username, String password, Date dateOfBirth, Address primaryAddress, Address secondaryAddress) {
+    public AccountHolder(String name, String username, String password, Date dateOfBirth, Address primaryAddress, Address secondaryAddress) {
         super(name, username, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;

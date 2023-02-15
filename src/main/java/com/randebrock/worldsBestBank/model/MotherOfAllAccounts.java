@@ -4,7 +4,6 @@ package com.randebrock.worldsBestBank.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -18,24 +17,23 @@ abstract class MotherOfAllAccounts {
             @AttributeOverride(name = "currency", column = @Column(name = "balance_currency"))
     })
     Money balance = new Money(BigDecimal.valueOf(0.0));
-    String primaryOwner;
-    String optionalSecondaryOwner;
+    @ManyToOne
+    @JoinColumn(name = "primaryOwner")
+    AccountHolder primaryOwner;
+    @ManyToOne
+    @JoinColumn(name = "secondaryOwner")
+    AccountHolder optionalSecondaryOwner;
     BigDecimal penaltyFee;
 
 
     public MotherOfAllAccounts() {
     }
 
-    public MotherOfAllAccounts(String primaryOwner, BigDecimal penaltyFee) {
+    public MotherOfAllAccounts(AccountHolder primaryOwner) {
         this.primaryOwner = primaryOwner;
         this.penaltyFee = penaltyFee;
     }
 
-    public MotherOfAllAccounts( String primaryOwner, String optionalSecondaryOwner, BigDecimal penaltyFee) {
-        this.primaryOwner = primaryOwner;
-        this.optionalSecondaryOwner = optionalSecondaryOwner;
-        this.penaltyFee = penaltyFee;
-    }
 
     public Long getAccountNumber() {
         return accountNumber;
@@ -53,19 +51,19 @@ abstract class MotherOfAllAccounts {
         this.balance = balance;
     }
 
-    public String getPrimaryOwner() {
+    public AccountHolder getPrimaryOwner() {
         return primaryOwner;
     }
 
-    public void setPrimaryOwner(String primaryOwner) {
+    public void setPrimaryOwner(AccountHolder primaryOwner) {
         this.primaryOwner = primaryOwner;
     }
 
-    public String getOptionalSecondaryOwner() {
+    public AccountHolder getOptionalSecondaryOwner() {
         return optionalSecondaryOwner;
     }
 
-    public void setOptionalSecondaryOwner(String optionalSecondaryOwner) {
+    public void setOptionalSecondaryOwner(AccountHolder optionalSecondaryOwner) {
         this.optionalSecondaryOwner = optionalSecondaryOwner;
     }
 

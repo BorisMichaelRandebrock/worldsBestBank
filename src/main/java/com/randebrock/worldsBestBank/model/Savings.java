@@ -20,8 +20,8 @@ public class Savings extends MotherOfAllAccounts{
     public Savings() {
     }
 
-    public Savings(String primaryOwner, BigDecimal penaltyFee, String secretKey, BigDecimal minimumBalance, BigDecimal interestRate) {
-        super(primaryOwner, penaltyFee);
+    public Savings(AccountHolder primaryOwner, String secretKey, BigDecimal minimumBalance, BigDecimal interestRate) {
+        super(primaryOwner);
         this.secretKey = secretKey;
         this.minimumBalance = minimumBalance;
         this.creationDate = Date.from(Instant.now());
@@ -29,14 +29,6 @@ public class Savings extends MotherOfAllAccounts{
         this.interestRate = interestRate;
     }
 
-    public Savings(String primaryOwner, String optionalSecondaryOwner, BigDecimal penaltyFee, String secretKey, BigDecimal minimumBalance, BigDecimal interestRate) {
-        super(primaryOwner, optionalSecondaryOwner, penaltyFee);
-        this.secretKey = secretKey;
-        this.minimumBalance = minimumBalance;
-        this.creationDate = Date.from(Instant.now());
-        this.status = Status.ACTIVE;
-        this.interestRate = interestRate;
-    }
 
     public String getSecretKey() {
         return secretKey;
