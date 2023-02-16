@@ -3,11 +3,10 @@ package com.randebrock.worldsBestBank.controller.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.randebrock.worldsBestBank.controller.dto.CheckingDTO;
 import com.randebrock.worldsBestBank.controller.dto.CreditCardDTO;
+import com.randebrock.worldsBestBank.controller.dto.SavingsDTO;
+import com.randebrock.worldsBestBank.controller.dto.StudentCheckingDTO;
 import com.randebrock.worldsBestBank.model.*;
-import com.randebrock.worldsBestBank.repository.AccountHolderRepository;
-import com.randebrock.worldsBestBank.repository.AdminRepository;
-import com.randebrock.worldsBestBank.repository.CheckingRepository;
-import com.randebrock.worldsBestBank.repository.CreditCardRepository;
+import com.randebrock.worldsBestBank.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +36,10 @@ class AdminControllerImplTest {
     private CheckingRepository checkingRepository;
     @Autowired
     private CreditCardRepository creditCardRepository;
+    @Autowired
+    private SavingsRepository savingsRepository;
+    @Autowired
+    private StudentCheckingRepository studentCheckingRepository;
 
 
     @Autowired
@@ -50,6 +53,8 @@ class AdminControllerImplTest {
     private Checking checking1, checking2;
 
     private CreditCard creditCard1, creditCard2, creditCard3;
+    private Savings savings1, savings2;
+    private StudentChecking studentChecking1, studentChecking2;
 
         Date birthday = new Date(13/02/1978);
     @BeforeEach
@@ -79,11 +84,28 @@ class AdminControllerImplTest {
 
         creditCardRepository.saveAll(List.of(creditCard1,creditCard2));
 
+        savings1 = new Savings(accountHolder1,null,  "123");
+        savings2 = new Savings(accountHolder2,null,  "123");
+
+        savingsRepository.saveAll(List.of(savings1,savings2));
+
+        studentChecking1 = new StudentChecking(accountHolder3, null, "123");
+        studentChecking2 = new StudentChecking(accountHolder1, null, "123");
+
+        studentCheckingRepository.saveAll(List.of(studentChecking1, studentChecking2));
+
 
     }
 
+
     @AfterEach
     void tearDown() {
+        studentChecking1.setPrimaryOwner(null);
+        studentChecking2.setPrimaryOwner(null);
+        studentCheckingRepository.deleteAll();
+        savings1.setPrimaryOwner(null);
+        savings2.setPrimaryOwner(null);
+        savingsRepository.deleteAll();
         creditCard1.setPrimaryOwner(null);
         creditCard1.setOptionalSecondaryOwner(null);
         creditCard2.setPrimaryOwner(null);
@@ -94,6 +116,7 @@ class AdminControllerImplTest {
             adminRepository.deleteAll();
             accountHolderRepository.deleteAll();
     }
+
 
 
     @Test
@@ -200,18 +223,66 @@ class AdminControllerImplTest {
     }
 
     @Test
-    void createNewSavingsAccount() {
+    void createNewSavingsAccount() throws Exception {
+        SavingsDTO savingsDTO = new SavingsDTO(accountHolder3, null, "123");
+
+        String body = objectMapper.writeValueAsString(savingsDTO);
+
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/accounts/savings")
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
     }
 
     @Test
-    void createNewStudentsCheckingAccount() {
+    void createNewStudentsCheckingAccount() throws Exception {
+        StudentCheckingDTO studentCheckingDTO = new StudentCheckingDTO(accountHolder3, null, "123");
+
+        String body = objectMapper.writeValueAsString(studentCheckingDTO);
+
+        MvcResult mvcResult = mockMvc.perform(
+                        post("/accounts/student-checkings")
+                                .content(body)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
     }
 
     @Test
-    void getAllSavingsAccounts() {
+    void getAllSavingsAccounts() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/savings"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        System.out.println("...............--------------------");
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
     }
 
     @Test
-    void getAllStudentCheckingAccounts() {
+    void getAllStudentCheckingAccounts() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/student-checkings"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        System.out.println(("-----------------------------------------"));
+        System.out.println(("-----------------------------------------"));
+        System.out.println(("-----------------------------------------"));
+        System.out.println(("-----------------------------------------"));
+
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
     }
 }
