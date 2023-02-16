@@ -64,9 +64,9 @@ public class SecurityConfiguration {
 //
 //        // set up authorization for different request matchers and user roles
 //        http.authorizeHttpRequests() // GET /hello/user
-//                .requestMatchers(HttpMethod.GET, "/hello-world").authenticated() // any role
-//                .requestMatchers(HttpMethod.GET, "/hello/admin").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.GET, "/hello/user").hasAnyRole("USER", "ADMIN")
+//                .requestMatchers(HttpMethod.GET, "/admin/*").authenticated() // any role
+//                .requestMatchers(HttpMethod.GET, "/admin/*").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.GET, "/account-holder/*").hasAnyRole("USER", "ADMIN")
 //                .requestMatchers(HttpMethod.GET, "/curses/*/department").hasRole("ADMIN")
 //                .anyRequest().permitAll(); // Any other route will be public
 //

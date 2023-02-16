@@ -5,23 +5,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "accountNumber")
-public class Checking extends MotherOfAllAccounts{
+public class Checking extends Account {
     private String secretKey;
     private BigDecimal minimumBalance;
     private BigDecimal monthlyMaintenanceFee;
-    private Date creationDate;
+    private final Date creationDate = Date.from(Instant.now());
     private Status status;
 
     public Checking() {
     }
 
-    public Checking(AccountHolder primaryOwner, String secretKey) {
-        super(primaryOwner);
+    public Checking(AccountHolder primaryOwner,AccountHolder secondaryOwner , String secretKey) {
+        super(primaryOwner, secondaryOwner);
         this.secretKey = secretKey;
+        this.status = Status.ACTIVE;
+        this.minimumBalance = new BigDecimal(250);
+        this.monthlyMaintenanceFee = new BigDecimal(12);
     }
 
 
@@ -52,10 +56,6 @@ public class Checking extends MotherOfAllAccounts{
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     public Status getStatus() {

@@ -4,7 +4,7 @@ import com.randebrock.worldsBestBank.model.AccountHolder;
 
 import java.util.List;
 
-public interface UserController {
+public interface AccountHolderController {
     List<AccountHolder> getUsers();
     void saveUser(AccountHolder user);
 }

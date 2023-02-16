@@ -1,7 +1,6 @@
 package com.randebrock.worldsBestBank.model;
 
 import com.randebrock.worldsBestBank.enums.Status;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
@@ -10,25 +9,28 @@ import java.time.Instant;
 import java.util.Date;
 @Entity
 @PrimaryKeyJoinColumn(name = "accountNumber")
-public class Savings extends MotherOfAllAccounts{
+public class Savings extends Account {
     private String secretKey;
     private BigDecimal minimumBalance;
-    private Date creationDate;
+    private final Date creationDate = Date.from(Instant.now());
     private Status status;
     private BigDecimal interestRate;
 
     public Savings() {
     }
 
-    public Savings(AccountHolder primaryOwner, String secretKey, BigDecimal minimumBalance, BigDecimal interestRate) {
-        super(primaryOwner);
+    public Savings(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey, BigDecimal interestRate, BigDecimal minimumBalance) {
+        super(primaryOwner, optionalSecondaryOwner);
         this.secretKey = secretKey;
-        this.minimumBalance = minimumBalance;
-        this.creationDate = Date.from(Instant.now());
         this.status = Status.ACTIVE;
-        this.interestRate = interestRate;
     }
-
+    public Savings(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
+        super(primaryOwner, optionalSecondaryOwner);
+        this.secretKey = secretKey;
+        this.minimumBalance = new BigDecimal(1000);
+        this.status = Status.ACTIVE;
+        this.interestRate = new BigDecimal(0.0025);
+    }
 
     public String getSecretKey() {
         return secretKey;
@@ -48,10 +50,6 @@ public class Savings extends MotherOfAllAccounts{
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     public Status getStatus() {
