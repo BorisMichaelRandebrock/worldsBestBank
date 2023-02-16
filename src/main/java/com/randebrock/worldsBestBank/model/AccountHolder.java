@@ -8,7 +8,8 @@ import java.util.Date;
     @PrimaryKeyJoinColumn(name = "id")
     public class AccountHolder extends User {
     private Date dateOfBirth;
-        @AttributeOverrides({
+/*
+@AttributeOverrides({
                 @AttributeOverride(name = "streetName", column = @Column(name = "primary_address")),
                 @AttributeOverride(name = "houseNumber", column = @Column(name = "primary_house_number")),
                 @AttributeOverride(name = "appartmentNumber", column = @Column(name = "primary_appartment_number")),
@@ -16,6 +17,7 @@ import java.util.Date;
                 @AttributeOverride(name = "country", column = @Column(name = "primary_country")),
                 @AttributeOverride(name = "postCode", column = @Column(name = "primary_postCode"))
         })
+        */
         @Embedded
     private Address primaryAddress;
         @AttributeOverrides({

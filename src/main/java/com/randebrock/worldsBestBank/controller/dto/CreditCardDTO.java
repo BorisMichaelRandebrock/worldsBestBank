@@ -1,22 +1,22 @@
 package com.randebrock.worldsBestBank.controller.dto;
 
 import com.randebrock.worldsBestBank.model.AccountHolder;
+import com.randebrock.worldsBestBank.model.Money;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Date;
 
-
-public class CheckingDTO {
+public class CreditCardDTO {
 
     @NotNull
     private AccountHolder primaryOwner;
     private AccountHolder optionalSecondaryOwner;
-    @NotNull
-    private String secretKey;
 
-    public CheckingDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
+    public CreditCardDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner) {
         this.primaryOwner = primaryOwner;
         this.optionalSecondaryOwner = optionalSecondaryOwner;
-        this.secretKey = secretKey;
     }
 
     public AccountHolder getPrimaryOwner() {
@@ -34,12 +34,5 @@ public class CheckingDTO {
     public void setOptionalSecondaryOwner(AccountHolder optionalSecondaryOwner) {
         this.optionalSecondaryOwner = optionalSecondaryOwner;
     }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
 }
+

@@ -5,10 +5,10 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class Address {
     private String streetName;
-    private int houseNumber;
+    private Integer houseNumber;
     private String appartmentNumber;
     private String city;
-    private int postCode;
+    private Integer postCode;
     private String country;
 
     public Address() {
@@ -16,7 +16,7 @@ public class Address {
 
 
 
-    public Address(String streetName, int houseNumber, String appartmentNumber, String city, int postCode, String country) {
+    public Address(String streetName, Integer houseNumber, String appartmentNumber, String city, Integer postCode, String country) {
         this.streetName = streetName;
         this.houseNumber = houseNumber;
         this.appartmentNumber = appartmentNumber;
@@ -33,11 +33,11 @@ public class Address {
         this.streetName = streetName;
     }
 
-    public int getHouseNumber() {
+    public Integer getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
     }
 
@@ -57,11 +57,11 @@ public class Address {
         this.city = city;
     }
 
-    public int getPostCode() {
+    public Integer getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(int postCode) {
+    public void setPostCode(Integer postCode) {
         this.postCode = postCode;
     }
 

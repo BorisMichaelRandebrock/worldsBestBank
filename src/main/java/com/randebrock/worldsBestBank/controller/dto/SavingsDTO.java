@@ -3,9 +3,7 @@ package com.randebrock.worldsBestBank.controller.dto;
 import com.randebrock.worldsBestBank.model.AccountHolder;
 import jakarta.validation.constraints.NotNull;
 
-
-
-public class CheckingDTO {
+public class SavingsDTO {
 
     @NotNull
     private AccountHolder primaryOwner;
@@ -13,7 +11,7 @@ public class CheckingDTO {
     @NotNull
     private String secretKey;
 
-    public CheckingDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
+    public SavingsDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
         this.primaryOwner = primaryOwner;
         this.optionalSecondaryOwner = optionalSecondaryOwner;
         this.secretKey = secretKey;

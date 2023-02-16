@@ -7,16 +7,16 @@ import java.math.BigDecimal;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-abstract class MotherOfAllAccounts {
+public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long accountNumber;
     @Embedded
-    @AttributeOverrides({
+   /* @AttributeOverrides({
             @AttributeOverride(name = "amount", column = @Column(name = "balance_amount")),
             @AttributeOverride(name = "currency", column = @Column(name = "balance_currency"))
-    })
-    Money balance = new Money(BigDecimal.valueOf(0.0));
+    })*/
+    Money balance;
     @ManyToOne
     @JoinColumn(name = "primaryOwner")
     AccountHolder primaryOwner;
@@ -26,12 +26,14 @@ abstract class MotherOfAllAccounts {
     BigDecimal penaltyFee;
 
 
-    public MotherOfAllAccounts() {
+    public Account() {
     }
 
-    public MotherOfAllAccounts(AccountHolder primaryOwner) {
+    public Account(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner) {
+        this.balance = new Money(new BigDecimal(0));
         this.primaryOwner = primaryOwner;
-        this.penaltyFee = penaltyFee;
+        this.optionalSecondaryOwner = optionalSecondaryOwner;
+        this.penaltyFee = new BigDecimal(40);
     }
 
 

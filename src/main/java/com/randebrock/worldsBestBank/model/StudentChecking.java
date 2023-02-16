@@ -9,18 +9,17 @@ import java.util.Date;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "accountNumber")
-public class StudentChecking extends MotherOfAllAccounts{
+public class StudentChecking extends Account {
     private String secretKey;
-    private Date creationDate;
+    private final Date creationDate = Date.from(Instant.now());
     private Status status;
 
     public StudentChecking() {
     }
 
-    public StudentChecking(AccountHolder primaryOwner, String secretKey) {
-        super(primaryOwner);
+    public StudentChecking(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner , String secretKey) {
+        super(primaryOwner, optionalSecondaryOwner);
         this.secretKey = secretKey;
-        this.creationDate = Date.from(Instant.now());
         this.status = Status.ACTIVE;
     }
 
@@ -36,10 +35,6 @@ public class StudentChecking extends MotherOfAllAccounts{
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
     }
 
     public Status getStatus() {
