@@ -8,29 +8,29 @@ import java.math.BigDecimal;
 public class TransferDTO {
 
     private Long id;
-    private AccountHolder sendingAccount;
-    private AccountHolder receivingAccount;
+    private Long sendingAccount;
+    private Long receivingAccount;
     private BigDecimal transferAmount;
 
-    public TransferDTO(AccountHolder sendingAccount, AccountHolder receivingAccount, BigDecimal transferAmount) {
+    public TransferDTO(Long sendingAccount, Long receivingAccount, BigDecimal transferAmount) {
         this.sendingAccount = sendingAccount;
         this.receivingAccount = receivingAccount;
         this.transferAmount = transferAmount;
     }
 
-    public AccountHolder getSendingAccount() {
+    public Long getSendingAccount() {
         return sendingAccount;
     }
 
-    public void setSendingAccount(AccountHolder sendingAccount) {
+    public void setSendingAccount(Long sendingAccount) {
         this.sendingAccount = sendingAccount;
     }
 
-    public AccountHolder getReceivingAccount() {
+    public Long getReceivingAccount() {
         return receivingAccount;
     }
 
-    public void setReceivingAccount(AccountHolder receivingAccount) {
+    public void setReceivingAccount(Long receivingAccount) {
         this.receivingAccount = receivingAccount;
     }
 

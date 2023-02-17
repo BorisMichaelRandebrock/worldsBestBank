@@ -15,7 +15,6 @@ public class StudentCheckingDTO {
     private String secretKey;
 
     public StudentCheckingDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
-//        this.primaryOwner = primaryOwner;
         setPrimaryOwner(primaryOwner);
         this.optionalSecondaryOwner = optionalSecondaryOwner;
         this.secretKey = secretKey;
@@ -27,7 +26,7 @@ public class StudentCheckingDTO {
 
     public void setPrimaryOwner(AccountHolder primaryOwner) {
         Date dob = primaryOwner.getDateOfBirth();
-        Date today = Date.from(Instant.from(LocalDate.now()));
+        Date today = Date.from(Instant.now());
         LocalDate now = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault()).toLocalDate();
         LocalDate birthday = LocalDateTime.ofInstant(dob.toInstant(), ZoneId.systemDefault()).toLocalDate();
         Period p = Period.between(birthday, now);

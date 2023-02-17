@@ -9,5 +9,5 @@ import java.util.List;
 public interface AccountHolderController {
     List<AccountHolder> getUsers();
     void saveUser(AccountHolder user);
-    Transfer moneyTransfer(TransferDTO transferDTO);
+//    Transfer moneyTransfer(TransferDTO transferDTO);
 }
