@@ -6,8 +6,7 @@ import com.randebrock.worldsBestBank.controller.dto.SavingsDTO;
 import com.randebrock.worldsBestBank.controller.dto.StudentCheckingDTO;
 import com.randebrock.worldsBestBank.controller.interfaces.AdminController;
 import com.randebrock.worldsBestBank.model.*;
-import com.randebrock.worldsBestBank.repository.AccountHolderRepository;
-import com.randebrock.worldsBestBank.repository.AdminRepository;
+import com.randebrock.worldsBestBank.repository.*;
 import com.randebrock.worldsBestBank.service.interfaces.AccountHolderService;
 import com.randebrock.worldsBestBank.service.interfaces.AdminService;
 import com.randebrock.worldsBestBank.service.interfaces.UserService;
@@ -30,6 +29,14 @@ public class AdminControllerImpl implements AdminController {
 
     @Autowired
     private AccountHolderRepository accountHolderRepository;
+    @Autowired
+    private CheckingRepository checkingRepository;
+    @Autowired
+    private CreditCardRepository creditCardRepository;
+    @Autowired
+    private SavingsRepository savingsRepository;
+    @Autowired
+    private  StudentCheckingRepository studentCheckingRepository;
 
 
     @Autowired
@@ -73,6 +80,26 @@ public class AdminControllerImpl implements AdminController {
         return adminService.createNewStudentsCheckingAccount(studentCheckingDTO);
     }
 
+    @GetMapping("/accounts/checkings/{accountNumber}")
+    public Checking findByAccountNumber(@PathVariable(name = "accountNumber") Long accountNumber) {
+        return checkingRepository.findById(accountNumber).get();
+    }
+
+    @GetMapping("/accounts/credit-cards/{accountNumber}")
+    public CreditCard findCreditCardByAccountNumber(@PathVariable(name = "accountNumber") Long accountNumber) {
+        return creditCardRepository.findById(accountNumber).get();
+    }
+
+    @GetMapping("/accounts/savings/{accountNumber}")
+    public Savings findSavingsByAccountNumber(@PathVariable(name = "accountNumber") Long accountNumber) {
+            return savingsRepository.findById(accountNumber).get();
+    }
+
+    @GetMapping("/accounts/student-checkings/{accountNumber}")
+    public StudentChecking findStudentCheckingByAccountNumber(@PathVariable(name = "accountNumber") Long accountNumber) {
+        return studentCheckingRepository.findById(accountNumber).get();
+    }
+
     @GetMapping("/accounts/credit-cards")
     public List<CreditCard> getAllCreditCardAccounts() {
         return adminService.getAllCreditCardAccounts();
@@ -85,5 +112,15 @@ public class AdminControllerImpl implements AdminController {
     @GetMapping("/accounts/student-checkings")
     public List<StudentChecking> getAllStudentCheckingAccounts() { return  adminService.getAllStudentCheckingAccounts();
     }
+
+
+   /* @GetMapping("/accounts")
+    public List<Account> getAllAccounts(){
+                adminService.getAllCheckingAccounts();
+                adminService.getAllSavingsAccounts();
+                adminService.getAllCreditCardAccounts();
+                adminService.getAllStudentCheckingAccounts();
+        return
+    }*/
 
 }

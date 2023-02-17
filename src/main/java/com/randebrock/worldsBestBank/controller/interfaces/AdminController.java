@@ -4,10 +4,7 @@ import com.randebrock.worldsBestBank.controller.dto.CheckingDTO;
 import com.randebrock.worldsBestBank.controller.dto.CreditCardDTO;
 import com.randebrock.worldsBestBank.controller.dto.SavingsDTO;
 import com.randebrock.worldsBestBank.controller.dto.StudentCheckingDTO;
-import com.randebrock.worldsBestBank.model.Checking;
-import com.randebrock.worldsBestBank.model.CreditCard;
-import com.randebrock.worldsBestBank.model.Savings;
-import com.randebrock.worldsBestBank.model.StudentChecking;
+import com.randebrock.worldsBestBank.model.*;
 
 import java.util.List;
 
@@ -23,10 +20,16 @@ public interface AdminController {
 
     StudentChecking createNewStudentsCheckingAccount(StudentCheckingDTO studentCheckingDTO);
 
+    Checking findByAccountNumber(Long accountNumber);
+
+    CreditCard findCreditCardByAccountNumber(Long accountNumber);
+    Savings findSavingsByAccountNumber(Long accountNumber);
+    StudentChecking findStudentCheckingByAccountNumber(Long accountNumber);
+
 }
 /*
 
-createAccountHolders
+
 seeBalanceAccountHolder
 modifyBalance
  */

@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,9 @@ class AdminControllerImplTest {
     private Savings savings1, savings2;
     private StudentChecking studentChecking1, studentChecking2;
 
-        Date birthday = new Date(13/02/1978);
+        Date birthday = new Date(78, 1, 13);
+        Date babyBirthday = new Date(109, 1,13);
+
     @BeforeEach
     void setUp() {
         admin1 = new Admin("Boo Bo", "Boo Boobo", "123");
@@ -68,9 +71,9 @@ class AdminControllerImplTest {
         postal = new Address("Sesamestreet", 213, "9","ElmsCity", 223, "ElmsLand");
 
 
-        accountHolder1 = new AccountHolder("BooUser","boo", "123", birthday,home, postal );
+        accountHolder1 = new AccountHolder("BooUser","boo", "123", babyBirthday,home, postal );
         accountHolder2 = new AccountHolder("NathaBoo", "natha", "123", birthday,home);
-        accountHolder3 = new AccountHolder("Iñigo Montoya", "nathan2", "123", birthday,home);
+        accountHolder3 = new AccountHolder("Iñigo Montoya", "nathan2", "123", babyBirthday,home);
 
         accountHolderRepository.saveAll(List.of(accountHolder1, accountHolder2, accountHolder3));
 
@@ -241,7 +244,7 @@ class AdminControllerImplTest {
     }
 
     @Test
-    void createNewStudentsCheckingAccount_PostingNewAccount_EntersNewAccountInDB() throws Exception {
+    void createNewStudentsCheckingAccount_PostingNewAccountAgeUnder24_EntersNewAccountInDB() throws Exception {
         StudentCheckingDTO studentCheckingDTO = new StudentCheckingDTO(accountHolder3, null, "123");
 
         String body = objectMapper.writeValueAsString(studentCheckingDTO);
@@ -255,10 +258,20 @@ class AdminControllerImplTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         System.out.println(mvcResult.getResponse().getContentAsString());
+        System.out.println(mvcResult.getResponse().getContentAsString());
+        System.out.println("--------------------------------");
+        System.out.println(accountHolder3);
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
     }
 
+    @Test
+    void createNewStudentsCheckingAccount_PostingNewAccountOlderThen24_ThrowsErrorEnters() throws Exception {
+        assertThrows(new IllegalArgumentException().getClass(), () -> {
+            StudentCheckingDTO studentCheckingDTO = new StudentCheckingDTO(accountHolder2, null, "123");
+        });
+
+    }
     @Test
     void getAllSavingsAccounts_NoParams_RetrievesAllAccountsFromDB() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/accounts/savings"))
@@ -279,6 +292,53 @@ class AdminControllerImplTest {
 //        System.out.println(mvcResult.getResponse().getContentAsString());
 //        System.out.println(("-----------------------------------------"));
         System.out.println(mvcResult.getResponse().getContentAsString());
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
         assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
+    }
+
+    @Test
+    void findByAccountId_NoParams_FindsAccountByAccountNumber() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/checkings/"+ checking1.getAccountNumber()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Montoya"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
+    }
+
+
+
+    @Test
+    void findCreditCardByAccountNumber_NoParams_FindsAccountByAccountNumber() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/credit-cards/"+ creditCard1.getAccountNumber()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Montoya"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
+    }
+
+    @Test
+    void findSavingsByAccountNumber() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/savings/"+ savings1.getAccountNumber()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("Montoya"));
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
+    }
+
+    @Test
+    void findStudentCheckingByAccountNumber() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/accounts/student-checkings/"+ studentChecking1.getAccountNumber()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
+        assertFalse(mvcResult.getResponse().getContentAsString().contains("BooUser"));
     }
 }
