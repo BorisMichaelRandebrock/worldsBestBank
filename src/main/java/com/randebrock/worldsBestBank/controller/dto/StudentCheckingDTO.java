@@ -3,6 +3,9 @@ package com.randebrock.worldsBestBank.controller.dto;
 import com.randebrock.worldsBestBank.model.AccountHolder;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.*;
+import java.util.Date;
+
 public class StudentCheckingDTO {
 
     @NotNull
@@ -12,7 +15,8 @@ public class StudentCheckingDTO {
     private String secretKey;
 
     public StudentCheckingDTO(AccountHolder primaryOwner, AccountHolder optionalSecondaryOwner, String secretKey) {
-        this.primaryOwner = primaryOwner;
+//        this.primaryOwner = primaryOwner;
+        setPrimaryOwner(primaryOwner);
         this.optionalSecondaryOwner = optionalSecondaryOwner;
         this.secretKey = secretKey;
     }
@@ -22,7 +26,19 @@ public class StudentCheckingDTO {
     }
 
     public void setPrimaryOwner(AccountHolder primaryOwner) {
-        this.primaryOwner = primaryOwner;
+        Date dob = primaryOwner.getDateOfBirth();
+        Date today = Date.from(Instant.from(LocalDate.now()));
+        LocalDate now = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault()).toLocalDate();
+        LocalDate birthday = LocalDateTime.ofInstant(dob.toInstant(), ZoneId.systemDefault()).toLocalDate();
+        Period p = Period.between(birthday, now);
+        int age = p.getYears();
+
+        if(age < 24) {
+            this.primaryOwner = primaryOwner;
+        } else {
+            throw new IllegalArgumentException("You have to be under 24 to be able to open a student checking account.");
+        }
+
     }
 
     public AccountHolder getOptionalSecondaryOwner() {

@@ -223,7 +223,7 @@ class AdminControllerImplTest {
     }
 
     @Test
-    void createNewSavingsAccount() throws Exception {
+    void createNewSavingsAccount_PostingNewAccount_EntersNewAccountInDB() throws Exception {
         SavingsDTO savingsDTO = new SavingsDTO(accountHolder3, null, "123");
 
         String body = objectMapper.writeValueAsString(savingsDTO);
@@ -241,7 +241,7 @@ class AdminControllerImplTest {
     }
 
     @Test
-    void createNewStudentsCheckingAccount() throws Exception {
+    void createNewStudentsCheckingAccount_PostingNewAccount_EntersNewAccountInDB() throws Exception {
         StudentCheckingDTO studentCheckingDTO = new StudentCheckingDTO(accountHolder3, null, "123");
 
         String body = objectMapper.writeValueAsString(studentCheckingDTO);
@@ -255,33 +255,29 @@ class AdminControllerImplTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
         System.out.println(mvcResult.getResponse().getContentAsString());
+
         assertTrue(mvcResult.getResponse().getContentAsString().contains("Montoya"));
     }
 
     @Test
-    void getAllSavingsAccounts() throws Exception {
+    void getAllSavingsAccounts_NoParams_RetrievesAllAccountsFromDB() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/accounts/savings"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        System.out.println(mvcResult.getResponse().getContentAsString());
-        System.out.println("...............--------------------");
+//        System.out.println(mvcResult.getResponse().getContentAsString());
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
     }
 
     @Test
-    void getAllStudentCheckingAccounts() throws Exception {
+    void getAllStudentCheckingAccounts_NoParams_RetrievesAllAccountsFromDB() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/accounts/student-checkings"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-        System.out.println(mvcResult.getResponse().getContentAsString());
-        System.out.println(("-----------------------------------------"));
-        System.out.println(("-----------------------------------------"));
-        System.out.println(("-----------------------------------------"));
-        System.out.println(("-----------------------------------------"));
-
+//        System.out.println(mvcResult.getResponse().getContentAsString());
+//        System.out.println(("-----------------------------------------"));
         System.out.println(mvcResult.getResponse().getContentAsString());
         assertTrue(mvcResult.getResponse().getContentAsString().contains("BooUser"));
     }

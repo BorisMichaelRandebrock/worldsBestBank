@@ -1,8 +1,8 @@
 package com.randebrock.worldsBestBank.service.impl;
 
-//import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
+import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
 import com.randebrock.worldsBestBank.model.AccountHolder;
-//import com.randebrock.worldsBestBank.model.Transfer;
+import com.randebrock.worldsBestBank.model.Transfer;
 import com.randebrock.worldsBestBank.repository.AccountHolderRepository;
 import com.randebrock.worldsBestBank.service.interfaces.AccountHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AccountHolderImpl implements AccountHolderService {
+public class AccountHolderServiceImpl implements AccountHolderService {
     @Autowired
     private AccountHolderRepository accountHolderRepository;
 
@@ -29,8 +29,8 @@ public class AccountHolderImpl implements AccountHolderService {
         return accountHolderRepository.save(accountHolder);
     }
 
-   /* @Override
-    public Transfer makeTransfer(TransferDTO transferDTO) {*/
+    @Override
+    public Transfer makeTransfer(TransferDTO transferDTO) {
         /*
         * user is owner of sending account
         * transfer dto:
@@ -48,6 +48,8 @@ public class AccountHolderImpl implements AccountHolderService {
         *
         *
         * */
-    /*    return null;
-    }*/
+       return null;
+    }
+
+
 }
