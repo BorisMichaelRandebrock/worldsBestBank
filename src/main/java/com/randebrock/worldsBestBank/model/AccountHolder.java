@@ -2,6 +2,7 @@ package com.randebrock.worldsBestBank.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
     @Entity
@@ -47,7 +48,15 @@ import java.util.Date;
         this.secondaryAddress = secondaryAddress;
     }
 
-    public Date getDateOfBirth() {
+        public static AccountHolder findByOwnerIdAndAccountId(AccountHolder sendingAccount) {
+            return sendingAccount;
+        }
+
+        public static AccountHolder findByAccountId(AccountHolder receivingAccount) {
+            return receivingAccount;
+        }
+
+        public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
@@ -70,4 +79,11 @@ import java.util.Date;
     public void setSecondaryAddress(Address secondaryAddress) {
         this.secondaryAddress = secondaryAddress;
     }
-}
+
+        public BigDecimal getBalance() {
+            return null;
+        }
+
+        public void setBalance(BigDecimal subtract) {
+        }
+    }

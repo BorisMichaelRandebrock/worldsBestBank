@@ -1,11 +1,10 @@
 package com.randebrock.worldsBestBank.controller.impl;
 
-//import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
+import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
 import com.randebrock.worldsBestBank.controller.interfaces.AccountHolderController;
 import com.randebrock.worldsBestBank.model.AccountHolder;
-//import com.randebrock.worldsBestBank.model.Transfer;
+import com.randebrock.worldsBestBank.model.Transfer;
 import com.randebrock.worldsBestBank.service.interfaces.AccountHolderService;
-//import com.randebrock.worldsBestBank.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ public class AccountHolderControllerImpl implements AccountHolderController {
 
     @GetMapping("/users")
     public List<AccountHolder> getUsers() {
-//        return accountHolderService.getUsers().get().
         return accountHolderService.getUsers();
     }
 
@@ -30,12 +28,14 @@ public class AccountHolderControllerImpl implements AccountHolderController {
     public void saveUser(AccountHolder user) {
     }
 
-   /* @PostMapping("/transfer")
+
+    @PostMapping("/transfer")
     @ResponseStatus(HttpStatus.CREATED)
     public Transfer moneyTransfer(TransferDTO transferDTO){
+//    public Transfer moneyTransfer(TransferDTO transferDTO){
        return accountHolderService.makeTransfer(transferDTO);
-    }*/
-
+//        return null;
+    }
 
 }
 
