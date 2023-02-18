@@ -1,5 +1,6 @@
 package com.randebrock.worldsBestBank;
 
+import com.randebrock.worldsBestBank.model.Transfer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
