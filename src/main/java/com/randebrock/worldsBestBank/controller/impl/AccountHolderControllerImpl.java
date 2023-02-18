@@ -29,13 +29,11 @@ public class AccountHolderControllerImpl implements AccountHolderController {
     }
 
 
-//    @PostMapping("/transfer")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Transfer moneyTransfer(TransferDTO transferDTO){
-////    public Transfer moneyTransfer(TransferDTO transferDTO){
-//       return accountHolderService.makeTransfer(transferDTO);
-////        return null;
-//    }
+    @PostMapping("/transfer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Transfer moneyTransfer(@RequestBody TransferDTO transferDTO){
+       return accountHolderService.makeTransfer(transferDTO);
+    }
 
 }
 
