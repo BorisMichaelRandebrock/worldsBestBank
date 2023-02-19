@@ -78,11 +78,11 @@ class AccountHolderServiceImplTest {
         Transfer sendMeTheMoney = new Transfer(Long.valueOf(1), Long.valueOf(2), new BigDecimal(500));
        /* Transfer moneytransfer = transfer.transferMoney(Long.valueOf(1), Long.valueOf(2), new BigDecimal(500));
         }*/
+        System.out.println("***********************");
+        System.out.println("***********************");
+        System.out.println("***********************");
+        System.out.println("***********************");
         System.out.println(checking1.getBalance() + " receiving balance: " + checking2.getBalance());
-        System.out.println("***********************");
-        System.out.println("***********************");
-        System.out.println("***********************");
-        System.out.println("***********************");
         System.out.println("***********************");
         System.out.println("***********************");
         System.out.println("***********************");
