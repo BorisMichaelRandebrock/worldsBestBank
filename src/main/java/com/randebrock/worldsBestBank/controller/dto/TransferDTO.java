@@ -12,6 +12,9 @@ public class TransferDTO {
     private Long receivingAccount;
     private BigDecimal transferAmount;
 
+    public TransferDTO() {
+    }
+
     public TransferDTO(Long sendingAccount, Long receivingAccount, BigDecimal transferAmount) {
         this.sendingAccount = sendingAccount;
         this.receivingAccount = receivingAccount;

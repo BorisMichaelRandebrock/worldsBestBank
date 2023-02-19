@@ -1,5 +1,6 @@
 package com.randebrock.worldsBestBank.controller.impl;
 
+import com.randebrock.worldsBestBank.controller.dto.DepositDTO;
 import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
 import com.randebrock.worldsBestBank.controller.interfaces.AccountHolderController;
 import com.randebrock.worldsBestBank.model.AccountHolder;
@@ -35,5 +36,10 @@ public class AccountHolderControllerImpl implements AccountHolderController {
        return accountHolderService.makeTransfer(transferDTO);
     }
 
+    @PatchMapping("/deposit/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addFunds(@PathVariable(name = "accountNumber") Long accountNumber, @RequestBody DepositDTO depositDTO) {
+        accountHolderService.addFunds(accountNumber, depositDTO);
+    }
 }
 
