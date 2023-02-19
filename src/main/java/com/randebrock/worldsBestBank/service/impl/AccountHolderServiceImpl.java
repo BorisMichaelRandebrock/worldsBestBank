@@ -2,6 +2,7 @@ package com.randebrock.worldsBestBank.service.impl;
 
 import com.randebrock.worldsBestBank.controller.dto.DepositDTO;
 import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
+import com.randebrock.worldsBestBank.controller.dto.WithdrawDTO;
 import com.randebrock.worldsBestBank.model.*;
 import com.randebrock.worldsBestBank.repository.*;
 import com.randebrock.worldsBestBank.service.interfaces.AccountHolderService;
@@ -275,8 +276,8 @@ public class AccountHolderServiceImpl implements AccountHolderService {
         }
     }
 
-   /* @Override
-    public void withdrawFunds(Long accountId, DepositDTO depositDTO) {
+    @Override
+    public void withdrawFunds(Long accountId, WithdrawDTO withdrawDTO) {
         Optional<Checking> optionalChecking = checkingRepository.findById(accountId);
         Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(accountId);
         Optional<Savings> optionalSavings = savingsRepository.findById(accountId);
@@ -284,29 +285,29 @@ public class AccountHolderServiceImpl implements AccountHolderService {
 
         if (optionalChecking.isPresent()){
             Checking account = optionalChecking.get();
-            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(depositDTO.getAmount().getAmount())));
+            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(withdrawDTO.getAmount().getAmount())));
             account.setBalance( newBalance);
             checkingRepository.save(optionalChecking.get());
         } else if (optionalCreditCard.isPresent()){
             CreditCard account = optionalCreditCard.get();
-            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(depositDTO.getAmount().getAmount())));
+            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(withdrawDTO.getAmount().getAmount())));
             account.setBalance( newBalance);
             creditCardRepository.save(optionalCreditCard.get());
         } else if (optionalSavings.isPresent()){
             Savings account = optionalSavings.get();
-            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(depositDTO.getAmount().getAmount())));
+            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(withdrawDTO.getAmount().getAmount())));
             account.setBalance( newBalance);
             savingsRepository.save(optionalSavings.get());
         } else if (optionalStudentChecking.isPresent()){
             StudentChecking account = optionalStudentChecking.get();
-            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(depositDTO.getAmount().getAmount())));
+            Money newBalance = new Money(account.getBalance().decreaseAmount(new Money(withdrawDTO.getAmount().getAmount())));
             account.setBalance( newBalance);
             studentCheckingRepository.save(optionalStudentChecking.get());
         }
         else {
-            System.out.println("The account " + depositDTO.getAccountId() + " does not exist. \nBetter luck next time :)" );
+            System.out.println("The account " + withdrawDTO.getAccountId() + " does not exist. \nYou still sit tight on your money :)" );
         }
-    }*/
+    }
 }
        /* else if (optionalChecking.isPresent()) {
             optionalChecking.get().setBalance(new Money(depositDTO.getAmount()));
