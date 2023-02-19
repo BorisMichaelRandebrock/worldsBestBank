@@ -1,5 +1,6 @@
 package com.randebrock.worldsBestBank.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 
@@ -11,8 +12,8 @@ public class Money {
 
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;
-
-    private final Currency currency;
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Currency currency;
     private BigDecimal amount;
 
 
@@ -20,6 +21,7 @@ public class Money {
         this.currency = USD;
     }
 
+    public Money(String balance){setAmount(new BigDecimal(balance)); }
     /**
      * Class constructor specifying amount, currency, and rounding
      **/

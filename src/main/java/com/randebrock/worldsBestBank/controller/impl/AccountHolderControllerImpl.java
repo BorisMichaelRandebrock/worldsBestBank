@@ -2,6 +2,7 @@ package com.randebrock.worldsBestBank.controller.impl;
 
 import com.randebrock.worldsBestBank.controller.dto.DepositDTO;
 import com.randebrock.worldsBestBank.controller.dto.TransferDTO;
+import com.randebrock.worldsBestBank.controller.dto.WithdrawDTO;
 import com.randebrock.worldsBestBank.controller.interfaces.AccountHolderController;
 import com.randebrock.worldsBestBank.model.AccountHolder;
 import com.randebrock.worldsBestBank.model.Transfer;
@@ -40,6 +41,12 @@ public class AccountHolderControllerImpl implements AccountHolderController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addFunds(@PathVariable(name = "accountNumber") Long accountNumber, @RequestBody DepositDTO depositDTO) {
         accountHolderService.addFunds(accountNumber, depositDTO);
+    }
+
+    @PatchMapping("/withdraw/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void withdrawFunds(@PathVariable(name = "accountNumber") Long accountNumber, @RequestBody WithdrawDTO withdrawDTO) {
+        accountHolderService.withdrawFunds(accountNumber, withdrawDTO);
     }
 }
 
