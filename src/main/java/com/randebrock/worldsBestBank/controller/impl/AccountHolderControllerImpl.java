@@ -48,5 +48,11 @@ public class AccountHolderControllerImpl implements AccountHolderController {
     public void withdrawFunds(@PathVariable(name = "accountNumber") Long accountNumber, @RequestBody WithdrawDTO withdrawDTO) {
         accountHolderService.withdrawFunds(accountNumber, withdrawDTO);
     }
+
+    @DeleteMapping("/delete/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccount(@PathVariable(name = "accountNumber") Long accountNumber) {
+        accountHolderService.deleteAccount(accountNumber);
+    }
 }
 

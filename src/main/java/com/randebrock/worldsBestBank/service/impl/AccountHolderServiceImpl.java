@@ -29,6 +29,7 @@ public class AccountHolderServiceImpl implements AccountHolderService {
     private StudentCheckingRepository studentCheckingRepository;
 
 
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -44,98 +45,6 @@ public class AccountHolderServiceImpl implements AccountHolderService {
 
     @Override
     public Transfer makeTransfer(TransferDTO transferDTO) {
-        /*
-        Optional<Checking> optionalChecking = checkingRepository.findById(transferDTO.getReceivingAccount());
-        if(optionalChecking.isPresent()){
-            Checking receivingAccount = optionalChecking.get();
-            Money newBalance = new Money(receivingAccount.getBalance().increaseAmount(new Money(transferDTO.getTransferAmount())));
-            receivingAccount.setBalance(newBalance);
-
-        }
-        Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(transferDTO.getReceivingAccount());
-        if(optionalCreditCard.isPresent()){
-            CreditCard receivingAccount = optionalCreditCard.get();
-            Money newBalance = new Money(receivingAccount.getBalance().increaseAmount(new Money(transferDTO.getTransferAmount())));
-            receivingAccount.setBalance(newBalance);
-        }
-        Optional<Savings> optionalSavings = savingsRepository.findById(transferDTO.getReceivingAccount());
-        if(optionalSavings.isPresent()){
-            Savings receivingAccount = optionalSavings.get();
-            Money newBalance = new Money(receivingAccount.getBalance().increaseAmount(new Money(transferDTO.getTransferAmount())));
-            receivingAccount.setBalance(newBalance);
-        }
-        Optional<StudentChecking> optionalStudentChecking = studentCheckingRepository.findById(transferDTO.getReceivingAccount());
-        if(optionalStudentChecking.isPresent()){
-            StudentChecking receivingAccount = optionalStudentChecking.get();
-            Money newBalance = new Money(receivingAccount.getBalance().increaseAmount(new Money(transferDTO.getTransferAmount())));
-            receivingAccount.setBalance(newBalance);
-        }
-        if(!optionalChecking.isPresent() && !optionalCreditCard.isPresent() && !optionalSavings.isPresent() && !optionalStudentChecking.isPresent() ){
-            throw new IllegalArgumentException("Receiving account does not exist!!");
-        }
-
-        Optional<Checking> checkingOptional = checkingRepository.findById(transferDTO.getSendingAccount());
-        if(checkingOptional.isPresent()){
-            Checking myAccount = checkingOptional.get();
-            if(myAccount.getBalance().getAmount().compareTo(transferDTO.getTransferAmount()) < 0){
-                throw new IllegalArgumentException("insufficient funds");
-            }
-            Money newBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(transferDTO.getTransferAmount())));
-            myAccount.setBalance( newBalance);
-            if(myAccount.getBalance().getAmount().compareTo(new Money(new BigDecimal(250)).getAmount()) < 0){
-             Money newPenalisedBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(new BigDecimal(40))));
-                myAccount.setBalance(newPenalisedBalance);
-            }
-
-        }
-
-        Optional<CreditCard> creditCardOptional = creditCardRepository.findById(transferDTO.getSendingAccount());
-        if(creditCardOptional.isPresent()){
-            CreditCard myAccount = creditCardOptional.get();
-            if(myAccount.getBalance().getAmount().compareTo(transferDTO.getTransferAmount()) < 0){
-                throw new IllegalArgumentException("insufficient funds");
-            }
-            Money newBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(transferDTO.getTransferAmount())));
-            myAccount.setBalance( newBalance);
-            if(myAccount.getBalance().getAmount().compareTo(new Money(new BigDecimal(250)).getAmount()) < 0){
-                Money newPenalisedBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(new BigDecimal(40))));
-                myAccount.setBalance(newPenalisedBalance);
-            }
-        }
-        Optional<Savings> savingsOptional = savingsRepository.findById(transferDTO.getSendingAccount());
-        if(savingsOptional.isPresent()){
-            Savings myAccount = savingsOptional.get();
-            if(myAccount.getBalance().getAmount().compareTo(transferDTO.getTransferAmount()) < 0){
-                throw new IllegalArgumentException("insufficient funds");
-            }
-            Money newBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(transferDTO.getTransferAmount())));
-            myAccount.setBalance( newBalance);
-            if(myAccount.getBalance().getAmount().compareTo(new Money(new BigDecimal(250)).getAmount()) < 0){
-                Money newPenalisedBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(new BigDecimal(40))));
-                myAccount.setBalance(newPenalisedBalance);
-            }
-        }
-
-        Optional<StudentChecking> studentCheckingOptional = studentCheckingRepository.findById(transferDTO.getSendingAccount());
-        if(studentCheckingOptional.isPresent()){
-            StudentChecking myAccount = studentCheckingOptional.get();
-            if(myAccount.getBalance().getAmount().compareTo(transferDTO.getTransferAmount()) < 0){
-                throw new IllegalArgumentException("insufficient funds");
-            }
-            Money newBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(transferDTO.getTransferAmount())));
-            myAccount.setBalance( newBalance);
-            if(myAccount.getBalance().getAmount().compareTo(new Money(new BigDecimal(250)).getAmount()) < 0){
-                Money newPenalisedBalance = new Money(myAccount.getBalance().decreaseAmount(new Money(new BigDecimal(40))));
-                myAccount.setBalance(newPenalisedBalance);
-            }
-
-        }
-
-        if(!checkingOptional.isPresent() && !creditCardOptional.isPresent() && !savingsOptional.isPresent() && !studentCheckingOptional.isPresent() ){
-            throw new IllegalArgumentException("Origin account does not exist!!");
-        }
-*/
-
 
         Optional<Checking> optionalChecking = checkingRepository.findById(transferDTO.getReceivingAccount());
         Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(transferDTO.getReceivingAccount());
@@ -308,14 +217,29 @@ public class AccountHolderServiceImpl implements AccountHolderService {
             System.out.println("The account " + withdrawDTO.getAccountId() + " does not exist. \nYou still sit tight on your money :)" );
         }
     }
+
+    @Override
+    public void deleteAccount(Long accountNumber) {
+        Optional<Checking> optionalChecking = checkingRepository.findById(accountNumber);
+        Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(accountNumber);
+        Optional<Savings> optionalSavings = savingsRepository.findById(accountNumber);
+        Optional<StudentChecking> optionalStudentChecking = studentCheckingRepository.findById(accountNumber);
+
+        if(optionalChecking.isPresent()){
+            Checking checking = checkingRepository.findById(accountNumber).get();
+            checkingRepository.delete(checking);
+        }
+        if(optionalCreditCard.isPresent()){
+            CreditCard creditCard = creditCardRepository.findById(accountNumber).get();
+            creditCardRepository.delete(creditCard);
+        }
+        if(optionalSavings.isPresent()){
+            Savings savings = savingsRepository.findById(accountNumber).get();
+            savingsRepository.delete(savings);
+        }
+        if(optionalStudentChecking.isPresent()){
+            StudentChecking studentChecking = studentCheckingRepository.findById(accountNumber).get();
+            studentCheckingRepository.delete(studentChecking);
+        }
+    }
 }
-       /* else if (optionalChecking.isPresent()) {
-            optionalChecking.get().setBalance(new Money(depositDTO.getAmount()));
-            checkingRepository.save(optionalChecking.get());
-        } else if (optionalStudentChecking.isPresent()) {
-            optionalStudentChecking.get().setBalance(new Money(depositDTO.getAmount()));
-            studentCheckingRepository.save(optionalStudentChecking.get());
-        } else if (optionalCreditCard.isPresent()){
-            optionalCreditCard.get().setBalance(new Money(depositDTO.getAmount()));
-            creditCardRepository.save(optionalCreditCard.get());
-        }*/

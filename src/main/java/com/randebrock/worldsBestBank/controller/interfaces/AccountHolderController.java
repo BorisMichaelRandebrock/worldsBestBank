@@ -15,4 +15,6 @@ public interface AccountHolderController {
     void addFunds(Long accountNumber, DepositDTO depositDTO);
 
     void withdrawFunds(Long accountId, WithdrawDTO withdrawDTO);
+
+  void deleteAccount(Long accountNumber);
 }
