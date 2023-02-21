@@ -20,7 +20,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 @SpringBootApplication
-public class WorldsBestBankApplication implements CommandLineRunner {
+//public class WorldsBestBankApplication {
+	public class WorldsBestBankApplication implements CommandLineRunner { /*---- uncomment this and line 51 @Override when finished testing*/
 
 	@Autowired
 	AdminRepository adminRepository;
@@ -124,23 +125,30 @@ public class WorldsBestBankApplication implements CommandLineRunner {
 					accountHolderRepository.save(newAccountHolder);
 					break;
 
-			/*	case "4":
+			case "4":
 					System.out.println("Enter Account Holder id:");
-					Long accountHolder = Long.valueOf(scanner.nextLine());
+					Long accountHolderId = Long.valueOf(scanner.nextLine());
+					Optional<AccountHolder> accountHolderOptional = accountHolderRepository.findById(accountHolderId);
+					if(accountHolderOptional.isEmpty()) throw new IllegalArgumentException("No account holder found");
 					System.out.println("Enter a secondary account Holder or, if not existing, enter null:");
-					Long secondaryAccountHolder = Long.valueOf(scanner.nextLine());
+					Long secondaryAccountHolderId = Long.valueOf(scanner.nextLine());
+					Optional<AccountHolder> accountHolderOptional2 = accountHolderRepository.findById(secondaryAccountHolderId);
+					if(accountHolderOptional2.isEmpty()) throw new IllegalArgumentException("No account holder found");
+
 					System.out.println("Enter a secret key:");
 					String secretKey = scanner.nextLine();
 
 
-					Checking checkingAccount = new Checking(accountHolder, secondaryAccountHolder, secretKey);
+					Checking checkingAccount = new Checking(accountHolderOptional.get(), accountHolderOptional2.get(), secretKey);
 
 
-					adminService.save(checkingAccount);
+					checkingRepository.save(checkingAccount);
 
 					System.out.println("New Checking account created.");
 
-					break;*/
+					break;
+			/*
+					*/
 /*
 				case "5":
 					System.out.println("Enter Account Holder id:");
@@ -374,120 +382,6 @@ public class WorldsBestBankApplication implements CommandLineRunner {
 		}
 		scanner.close();
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			/*	case "4":
-					System.out.println("Enter the Author:");
-					command = scanner.nextLine();
-					if(command.length()<4){
-						System.out.println("Minimun 4 characters for search by author name");
-					}
-					List<Author> bookAuthorList = authorRepository.findByNameContainingWithBooks(command);
-
-					if(bookAuthorList.size()==0){
-						System.out.println("No matching results");
-					} else {
-						for(Author author: bookAuthorList){
-							for(Book book: author.getAuthorBooks()){
-								System.out.println("--------------------------------\n"  + "ISBN: " + book.getIsbn()+" \nTitle: " +book.getTitle()+" \nAuthor: " +book.getAuthor().getName()+" \nCategory: "+book.getCategory()+" \nQuantity available: "+book.getQuantity() + "\n--------------------------------");
-							}
-						}
-
-					}
-					break;
-				case "5":
-					List<Book> allBooks = bookRepository.findAll();
-					if(allBooks.size()==0){
-						System.out.println("No matching results");
-					} else {
-						for(Book book: allBooks){
-							System.out.println("--------------------------------\n"  + "ISBN: " + book.getIsbn()+" \nTitle: " +book.getTitle()+" \nAuthor: " +book.getAuthor().getName()+" \nCategory: "+book.getCategory()+" \nQuantity available: "+book.getQuantity() + "\n--------------------------------");
-						}
-					}
-					break;
-				case "6":
-					System.out.println("Enter usn:");
-					String issueUsn = scanner.nextLine();
-					System.out.println("Enter name:");
-					String issueName = scanner.nextLine();
-					System.out.println("Enter book ISBN:");
-					String issueIsbn = scanner.nextLine();
-					if(!bookRepository.findById(issueIsbn).isPresent()){
-						System.out.println("Book not found in the system");
-						break;
-					}
-					if(bookRepository.findById(issueIsbn).get().getQuantity()<=0){
-						System.out.println("No copies of this Book available");
-						break;
-					}
-					Optional<Book> optionalBook = bookRepository.findById(issueIsbn);
-					Optional<Student> optionalStudent = studentRepository.findById(issueUsn);
-					if(optionalStudent.isPresent()){
-						optionalBook.get().setQuantity(optionalBook.get().getQuantity()-1);
-						bookRepository.save(optionalBook.get());
-						Issue newIssue = new Issue(optionalStudent.get(), optionalBook.get());
-						issueRepository.save(newIssue);
-						optionalStudent.get().setIssuedBooks(List.of(newIssue));
-						studentRepository.save(optionalStudent.get());
-						System.out.println("Book issued to "+issueName);
-						System.out.println("Return date: "+newIssue.getReturnDate());
-					} else {
-						optionalBook.get().setQuantity(optionalBook.get().getQuantity()-1);
-						bookRepository.save(optionalBook.get());
-						Student newStudent = new Student(issueUsn, issueName);
-						studentRepository.save(newStudent);
-						Issue newIssue = new Issue(newStudent, optionalBook.get());
-						issueRepository.save(newIssue);
-						newStudent.setIssuedBooks(List.of(newIssue));
-						studentRepository.save(newStudent);
-						System.out.println("Book issued to new student: "+issueName);
-						System.out.println("Return date: "+newIssue.getReturnDate());
-					}
-
-					break;
-				case "7":
-					System.out.println("Enter student usn:");
-					String studentUsn = scanner.nextLine();
-					Optional<Student> studentOptional = studentRepository.findByUsnWithBooks(studentUsn);
-					if(!studentOptional.isPresent()){
-						System.out.println("Student not found");
-					} else {
-						for(Issue issue: studentOptional.get().getIssuedBooks()){
-							System.out.println("--------------------------------\n"  + "ISBN: " + issue.getIssueBook().getIsbn()+" \nTitle: " +issue.getIssueBook().getTitle()+" \nAuthor: " +issue.getIssueBook().getAuthor().getName()+" \nCategory: "+issue.getIssueBook().getCategory()+" \nQuantity available: "+issue.getIssueBook().getQuantity() + "\n--------------------------------");
-						}
-					}
-					break;
-				case "8":
-					SpringApplication.run(IronLibraryApplication.class, args).close();
-					System.out.println("Goodbye!");
-					break;
-				default:
-					help();
-					break;
-
-			*/
-
 
 
 	public static void menu(){
