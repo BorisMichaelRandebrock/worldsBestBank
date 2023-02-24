@@ -45,6 +45,7 @@ public class SecurityConfiguration {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeHttpRequests()
+
                 .anyRequest().permitAll(); // <-- Aquí estamos colocando TODAS nuestras rutas de manera pública
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
