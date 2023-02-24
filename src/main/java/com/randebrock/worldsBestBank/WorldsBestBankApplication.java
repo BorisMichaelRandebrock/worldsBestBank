@@ -134,101 +134,80 @@ import java.util.*;
 					Long secondaryAccountHolderId = Long.valueOf(scanner.nextLine());
 					Optional<AccountHolder> accountHolderOptional2 = accountHolderRepository.findById(secondaryAccountHolderId);
 					if(accountHolderOptional2.isEmpty()) throw new IllegalArgumentException("No account holder found");
-
 					System.out.println("Enter a secret key:");
 					String secretKey = scanner.nextLine();
 
-
 					Checking checkingAccount = new Checking(accountHolderOptional.get(), accountHolderOptional2.get(), secretKey);
-
-
 					checkingRepository.save(checkingAccount);
-
 					System.out.println("New Checking account created.");
-
 					break;
-			/*
-					*/
-/*
+
 				case "5":
 					System.out.println("Enter Account Holder id:");
 					Long creditCardHolderId = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the credit card account number:");
-					Long creditCardAccountNumber = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the credit card account type:");
-					String creditCardType = scanner.nextLine();
-					System.out.println("Enter the credit card account balance:");
-					Double creditCardBalance = Double.valueOf(scanner.nextLine());
-					System.out.println("Enter the credit card account credit Limit:");
-					Double creditLimit = Double.valueOf(scanner.nextLine());
+					Optional<AccountHolder> creditCardHolderIdOptional = accountHolderRepository.findById(creditCardHolderId);
+					if(creditCardHolderIdOptional.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secondary account Holder or, if not existing, enter null:");
+					Long secondaryCreditCardAccountHolderId = Long.valueOf(scanner.nextLine());
+					Optional<AccountHolder> creditCardAccountHolderOptional2 = accountHolderRepository.findById(secondaryCreditCardAccountHolderId);
+					if(creditCardAccountHolderOptional2.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secret key:");
+					String creditCardSecretKey = scanner.nextLine();
 
-					AccountHolder creditCardHolder = getUsers().stream().filter(a -> a.getId().equals(creditCardHolderId)).findFirst().get();
+					CreditCard creditCardAccount = new CreditCard(creditCardHolderIdOptional.get(),creditCardAccountHolderOptional2.get());
+					creditCardRepository.save(creditCardAccount);
 
-					CreditCard creditCardAccount = createNewCreditCardAccount(new CreditCardDTO(creditCardAccountNumber, creditCardType, creditCardBalance, creditLimit));
-					creditCardHolder.addCreditCardAccount(creditCardAccount);
-
-					creditCardRepository.save(creditCardHolder);
-
-					System.out.println("New Credit Card account created.");
-
+					System.out.println("Dear "+ creditCardHolderIdOptional.get().getName() +" your Credit Card account created.");
 					break;
+
 				case "6":
 					System.out.println("Enter Account Holder id:");
 					Long savingsHolderId = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the savings account number:");
-					Long savingsAccountNumber = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the savings account type:");
-					String savingsType = scanner.nextLine();
-					System.out.println("Enter the savings account balance:");
-					Double savingsBalance = Double.valueOf(scanner.nextLine());
-					System.out.println("Enter the savings account interest rate:");
-					Double interestRate = Double.valueOf(scanner.nextLine());
+					Optional<AccountHolder> savingsHolderIdOptional = accountHolderRepository.findById(savingsHolderId);
+					if(savingsHolderIdOptional.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secondary account Holder or, if not existing, enter null:");
+					Long secondarySavingsAccountHolderId = Long.valueOf(scanner.nextLine());
+					Optional<AccountHolder> savingsAccountHolderOptional2 = accountHolderRepository.findById(secondarySavingsAccountHolderId);
+					if(savingsAccountHolderOptional2.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secret key:");
+					String savingsSecretKey = scanner.nextLine();
 
-					AccountHolder savingsHolder = getUsers().stream().filter(a -> a.getId().equals(savingsHolderId)).findFirst().get();
+					Savings savingsAccount = new Savings(savingsHolderIdOptional.get(), savingsAccountHolderOptional2.get(), savingsSecretKey);
 
-					Savings savingsAccount = createNewSavingsAccount(new SavingsDTO(savingsAccountNumber, savingsType, savingsBalance, interestRate));
-					savingsHolder.addSavingsAccount(savingsAccount);
-
-					savingsRepository.save(savingsHolder);
-
-					System.out.println("New Savings account created.");
-
+					savingsRepository.save(savingsAccount);
+					System.out.println("Dear "+ savingsHolderIdOptional.get().getName() +" your Credit Card account created.");
 					break;
+
 				case "7":
 					System.out.println("Enter Account Holder id:");
 					Long studentCheckingHolderId = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the student checking account number:");
-					Long studentCheckingAccountNumber = Long.valueOf(scanner.nextLine());
-					System.out.println("Enter the student checking account type:");
-					String studentCheckingType = scanner.nextLine();
-					System.out.println("Enter the student checking account balance:");
-					Double studentCheckingBalance = Double.valueOf(scanner.nextLine());
-					System.out.println("Enter the student checking account interest rate:");
-					Double studentCheckingInterestRate = Double.valueOf(scanner.nextLine());
-					System.out.println("Enter the student checking account required monthly payments:");
-					Double requiredMonthlyPayments = Double.valueOf(scanner.nextLine());
+					Optional<AccountHolder> studentCheckingHolderIdOptional = accountHolderRepository.findById(studentCheckingHolderId);
+					if(studentCheckingHolderIdOptional.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secondary account Holder or, if not existing, enter null:");
+					Long secondaryStudentCheckingAccountHolderId = Long.valueOf(scanner.nextLine());
+					Optional<AccountHolder> studentCheckingAccountHolderOptional2 = accountHolderRepository.findById(secondaryStudentCheckingAccountHolderId);
+					if(studentCheckingAccountHolderOptional2.isEmpty()) throw new IllegalArgumentException("No account holder found");
+					System.out.println("Enter a secret key:");
+					String studentCheckingSecretKey = scanner.nextLine();
 
-					AccountHolder studentCheckingHolder = getUsers().stream().filter(a -> a.getId().equals(studentCheckingHolderId)).findFirst().get();
+					StudentChecking studentCheckingAccount = new StudentChecking(studentCheckingHolderIdOptional.get(), studentCheckingAccountHolderOptional2.get(), studentCheckingSecretKey);
 
-					StudentChecking studentCheckingAccount = createNewStudentsCheckingAccount(new StudentCheckingDTO(studentCheckingAccountNumber, studentCheckingType, studentCheckingBalance, studentCheckingInterestRate, requiredMonthlyPayments));
-					studentCheckingHolder.addStudentCheckingAccount(studentCheckingAccount);
+					studentCheckingRepository.save(studentCheckingAccount);
 
-					studentCheckingRepository.save(studentCheckingHolder);
-
-					System.out.println("New Student Checking account created.");
-
+					System.out.println("Dear " + studentCheckingHolderIdOptional.get().getName() + " your student checking account has been created :)");
 					break;
+
 				case "8":
 					System.out.println("Enter the account number of the checking account you want to find:");
 					Long accountNumber = Long.valueOf(scanner.nextLine());
+					Optional<Checking> optionalChecking =  checkingRepository.findById(accountNumber);
+					if(optionalChecking.isEmpty()) throw new IllegalArgumentException("This account does not exist");
 
-					Checking checkingAccount = findByAccountNumber(accountNumber);
-					System.out.println("Checking account found:");
-					System.out.println(checkingAccount.toString());
-
+					System.out.println("Checking account found: " + optionalChecking.get().getBalance());
 					break;
+
 				case "9":
-					List<Checking> allCheckingAccounts = getAllCheckingAccounts();
+					List<Checking> allCheckingAccounts = checkingRepository.findAll();
 					System.out.println("All checking accounts:");
 					allCheckingAccounts.forEach(System.out::println);
 
@@ -236,14 +215,15 @@ import java.util.*;
 				case "10":
 					System.out.println("Enter the account number of the credit card account you want to find:");
 					Long creditCardAccountNumber = Long.valueOf(scanner.nextLine());
+					Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(creditCardAccountNumber);
+					if(optionalCreditCard.isEmpty()) throw new IllegalArgumentException("This account does not exist");
 
-					CreditCard creditCardAccount = findCreditCardByAccountNumber(creditCardAccountNumber);
-					System.out.println("Credit Card account found:");
-					System.out.println(creditCardAccount.toString());
+					System.out.println("Credit Card account found:" + optionalCreditCard.get().getBalance() + optionalCreditCard.get().getPrimaryOwner());
+					System.out.println(optionalCreditCard.get().getCreationDate() + "" + optionalCreditCard.get().getCreditLimit());
 
 					break;
 				case "11":
-					List<CreditCard> allCreditCardAccounts = getAllCreditCardAccounts();
+					List<CreditCard> allCreditCardAccounts = creditCardRepository.findAll();
 					System.out.println("All Credit Card accounts:");
 					allCreditCardAccounts.forEach(System.out::println);
 
@@ -251,14 +231,14 @@ import java.util.*;
 				case "12":
 					System.out.println("Enter the account number of the savings account you want to find:");
 					Long savingsAccountNumber = Long.valueOf(scanner.nextLine());
+					Optional<Savings> optionalSavings = savingsRepository.findById(savingsAccountNumber);
+					if (optionalSavings.isEmpty()) throw new IllegalArgumentException("No such thing is lurking around here");
 
-					Savings savingsAccount = findSavingsByAccountNumber(savingsAccountNumber);
-					System.out.println("Savings account found:");
-					System.out.println(savingsAccount.toString());
+					System.out.println("Savings account found, the balance is : " + optionalSavings.get().getBalance());
 
 					break;
 				case "13":
-					List<Savings> allSavingsAccounts = getAllSavingsAccounts();
+					List<Savings> allSavingsAccounts = savingsRepository.findAll();
 					System.out.println("All Savings accounts:");
 					allSavingsAccounts.forEach(System.out::println);
 
@@ -266,14 +246,14 @@ import java.util.*;
 				case "14":
 					System.out.println("Enter the account number of the student checking account you want to find:");
 					Long studentCheckingAccountNumber = Long.valueOf(scanner.nextLine());
+					Optional<StudentChecking> optionalStudentChecking = studentCheckingRepository.findById(studentCheckingAccountNumber);
+					if(optionalStudentChecking.isEmpty()) throw new IllegalArgumentException("try again later... this account does not seem to exist..");
 
-					StudentChecking studentCheckingAccount = findStudentCheckingByAccountNumber(studentCheckingAccountNumber);
-					System.out.println("Student Checking account found:");
-					System.out.println(studentCheckingAccount.toString());
+					System.out.println("Student Checking account found, the current balance is :" + optionalStudentChecking.get().getBalance());
 
 					break;
 				case "15":
-					List<StudentChecking> allStudentCheckingAccounts = getAllStudentCheckingAccounts();
+					List<StudentChecking> allStudentCheckingAccounts = studentCheckingRepository.findAll();
 					System.out.println("All Student Checking accounts:");
 					allStudentCheckingAccounts.forEach(System.out::println);
 
@@ -284,7 +264,7 @@ import java.util.*;
 
 					Admin admin = adminRepository.findById(adminId).get();
 					System.out.println("Admin found:");
-					System.out.println(admin.toString());
+					System.out.println(admin.getUsername() +" " + admin.toString());
 
 					break;
 				case "17":
@@ -296,7 +276,7 @@ import java.util.*;
 
 				case "18":
 					System.out.println("Enter id of the admin you want to edit:");
-					Long adminId = Long.valueOf(scanner.nextLine());
+					Long adminIdToEdit = Long.valueOf(scanner.nextLine());
 
 					System.out.println("Enter the new name for the admin:");
 					String adminName = scanner.nextLine();
@@ -305,7 +285,7 @@ import java.util.*;
 					System.out.println("Enter the new password for the admin:");
 					String adminPassword = scanner.nextLine();
 
-					Admin adminToEdit = adminRepository.findById(adminId).get();
+					Admin adminToEdit = adminRepository.findById(adminIdToEdit).get();
 					adminToEdit.setName(adminName);
 					adminToEdit.setUsername(adminUsername);
 					adminToEdit.setPassword(adminPassword);
@@ -313,20 +293,21 @@ import java.util.*;
 					adminRepository.save(adminToEdit);
 
 					break;
+/*
 				case "19":
 					System.out.println("Enter the account number you want to edit:");
-					Long accountNumber = Long.valueOf(scanner.nextLine());
+					Long accountNumberEditable = Long.valueOf(scanner.nextLine());
 
-					System.out.println("Enter the new type for the account:");
-					String accountType = scanner.nextLine();
-					System.out.println("Enter the new balance for the account:");
-					Double accountBalance = Double.valueOf(scanner.nextLine());
+					System.out.println("Enter the id of the new primary Owner for the account:");
+					Long newPrimaryOwnerId = Long.valueOf(scanner.nextLine());
+					Optional<Checking> optionalCheckingToBeEdited = checkingRepository.findById(accountNumberEditable);
 
-					Checking checkingAccountToEdit = findByAccountNumber(accountNumber);
-					checkingAccountToEdit.setType(accountType);
-					checkingAccountToEdit.setBalance(accountBalance);
+					optionalCheckingToBeEdited.get().setPrimaryOwner(newPrimaryOwnerId.);
+					Checking checkingAccountToEdit = checkingRepository.findById(accountNumberEditable.);
+					checkingAccountToEdit.setPrimaryOwner(newPrimaryOwnerId);
 
 					accountHolderRepository.save(checkingAccountToEdit);
+					checkingAccountToEdit.setBalance(accountBalance);
 					break;
  */
 				case "20":
